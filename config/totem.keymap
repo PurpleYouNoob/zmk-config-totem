@@ -11,7 +11,6 @@
 // Layout adapté de QMK vers ZMK - AZERTY Belge
 // Colonnes 0 et 11 exclues (ESC, TAB, DEL, ENT, etc.)
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
@@ -20,91 +19,109 @@
     combos {
         compatible = "zmk,combos";
 
-        combo_esc {
+        Esc {
             bindings = <&kp ESC>;
-            key-positions = <10 11 12 13>;
+            key-positions = <13 12 11 10>;
         };
 
-        combo_tab {
+        Tab {
             bindings = <&kp TAB>;
-            key-positions = <13 23>;
+            key-positions = <13 12>;
         };
 
-        combo_enter {
+        Enter {
             bindings = <&kp ENTER>;
             key-positions = <16 17 18 19>;
         };
 
-        combo_win {
-            bindings = <&kp LGUI>;
+        Windows {
+            bindings = <&kp LEFT_WIN>;
             key-positions = <16 17>;
+        };
+
+        Bt_Disc0 {
+            bindings = <&bt BT_DISC 0>;
+            key-positions = <5 20>;
+            layers = <3>;
+        };
+
+        Bt_Disc1 {
+            bindings = <&bt BT_DISC 1>;
+            key-positions = <20 15>;
+            layers = <3>;
+        };
+
+        Bt_Disc2 {
+            bindings = <&bt BT_DISC 2>;
+            key-positions = <20 26>;
+            layers = <3>;
+        };
+
+        Bt_Disc3 {
+            bindings = <&bt BT_DISC 3>;
+            key-positions = <20 27>;
+            layers = <3>;
+        };
+
+        Bt_Disc4 {
+            bindings = <&bt BT_DISC 4>;
+            key-positions = <20 28>;
+            layers = <3>;
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        // Base - AZERTY Belge (garder CTRL col 0 et DEL col 11)
         base_layer {
             bindings = <
-                // BE_A, BE_Z, BE_E, BE_R, BE_T    BE_Y, BE_U, BE_I, BE_O, BE_P
-                &kp Q      &kp W      &kp E      &kp R      &kp T           &kp Y      &kp U        &kp I        &kp O      &kp P
-                // BE_Q, BE_S, BE_D, BE_F, BE_G    BE_H, BE_J, BE_K, BE_L, BE_M  
-                &kp A      &kp S      &kp D      &kp F      &kp G           &kp H      &kp J        &kp K        &kp L      &kp SEMI
-                // CTRL, BE_W, BE_X, BE_C, BE_V, BE_B    BE_N, BE_DOT, BE_COMM, BE_SCLN, BE_COLN, DEL
-                &kp LCTRL  &kp Z      &kp X      &kp C      &kp V   &kp B   &kp N      &kp M        &kp COMMA    &kp DOT    &kp FSLH   &kp DEL
-                                      &kp LALT   &mo 1      &kp SPACE       &kp BSPC   &mo 2        &kp LSHFT
+           &kp Q  &kp W  &kp E     &kp R  &kp T        &kp Y     &kp U       &kp I      &kp O      &kp P
+           &kp A  &kp S  &kp D     &kp F  &kp G        &kp H     &kp J       &kp K      &kp L      &kp SEMI
+&kp LCTRL  &kp Z  &kp X  &kp C     &kp V  &kp B        &kp N     &kp LS(LT)  &kp M      &kp COMMA  &kp DOT   &kp DEL
+                         &kp LALT  &mo 1  &kp SPACE    &kp BSPC  &mo 2       &kp LSHFT
             >;
+
             label = "Base";
         };
 
-        // Num + arrows (couche 1)
         nav_layer {
             bindings = <
-                // KC_NO, KC_HOME, KC_UP, KC_END, KC_NO    BE_EQL, BE_1, BE_2, BE_3, BE_PLUS
-                &none          &kp HOME   &kp UP     &kp END    &none           &kp EQUAL  &kp N1       &kp N2       &kp N3     &kp MINUS
-                // KC_PSCR, KC_LEFT, KC_DOWN, KC_RIGHT, KC_NO    BE_0, BE_4, BE_5, BE_6, BE_MINS
-                &kp PSCRN      &kp LEFT   &kp DOWN   &kp RIGHT  &none           &kp N0     &kp N4       &kp N5       &kp N6     &kp RBKT
-                // KC_NO, KC_PGUP, KC_INS, KC_PGDN, KC_NO    BE_SLSH, BE_7, BE_8, BE_9, BE_ASTR
-                &kp LCTRL      &none      &kp PG_UP  &kp INS    &kp PG_DN &none &kp GRAVE  &kp N7       &kp N8       &kp N9     &kp BSLH   &kp DEL
-                                          &kp LALT   &trans     &kp SPACE       &kp BSPC   &mo 2        &kp LSHFT
+           &none            &kp HOME   &kp UP    &kp END    &none        &kp FSLH      &kp LS(EXCL)  &kp LS(AT)     &kp LS(POUND)  &kp LS(QMARK)
+           &kp PRINTSCREEN  &kp LEFT   &kp DOWN  &kp RIGHT  &none        &kp LS(RPAR)  &kp LS(DLLR)  &kp LS(PRCNT)  &kp LS(CARET)  &kp EQUAL
+&kp LCTRL  &none            &kp PG_UP  &kp INS   &kp PG_DN  &none        &kp LS(GT)    &kp LS(AMPS)  &kp LS(STAR)   &kp LS(LPAR)   &kp LS(RBRC)   &kp DEL
+                                       &kp LALT  &mo 1      &kp SPACE    &kp BSPC      &mo 2         &kp LSHFT
             >;
+
             label = "Nav";
         };
 
-        // Signe (couche 2)
         symb_layer {
             bindings = <
-                // BE_DLR, BE_UNDS, BE_DQUO, BE_QUOT, BE_ASTR    BE_QUES, BE_AMPR, BE_PIPE, BE_AT, BE_HASH
-                &kp LS(N4)     &kp LS(FSLH)   &kp N3         &kp LS(SQT)    &kp RBKT        &kp LS(EQUAL) &kp N1       &kp LS(N1)   &kp LS(N3)  &kp LS(N5)
-                // BE_LABK, BE_LBRC, BE_LCBR, BE_LPRN, BE_SLSH    BE_EXLM, BE_RPRN, BE_RCBR, BE_RBRC, BE_RABK
-                &kp NUBS       &kp RA(N5)     &kp RA(N4)     &kp LS(N5)     &kp LS(DOT)     &kp RA(EQUAL) &kp LS(RBKT) &kp RA(N7)   &kp RA(N0)  &kp LS(NUBS)
-                // BE_TILD, BE_MINS, BE_PLUS, BE_EQL, BE_BSLS    BE_EURO, BE_COLN, BE_CIRC, BE_PERC, BE_GRV
-                &kp LCTRL      &kp RA(N2)     &kp N6         &kp LS(EQUAL)  &kp EQUAL &kp RA(N8) &kp RA(E)    &kp LS(DOT)  &kp LS(N6)  &kp LS(RBKT) &kp RA(EQUAL) &kp DEL
-                                              &kp LALT       &mo 1          &kp SPACE       &kp BSPC     &trans       &kp LSHFT
+           &kp RBKT      &kp LS(PLUS)  &kp N3         &kp N4    &kp LS(RBRC)    &kp LS(M)  &kp N1     &kp LA(N1)  &kp LA(N2)    &kp LA(N3)
+           &kp BSLH      &kp LA(LBKT)  &kp LA(N9)     &kp N5    &kp LS(GT)      &kp N8     &kp MINUS  &kp LA(N0)  &kp LA(RBKT)  &kp LS(PIPE)
+&kp LCTRL  &kp LA(FSLH)  &kp EQUAL     &kp LS(QMARK)  &kp FSLH  &kp LA(BSLH)    &kp LA(E)  &kp DOT    &kp LA(N6)  &kp LS(DQT)   &kp LA(BSLH)  &kp DEL
+                                       &kp LALT       &mo 1     &kp SPACE       &kp BSPC   &mo 2      &kp LSHFT
             >;
+
             label = "Symbole";
         };
 
-        // Funct (couche 3)
         fn_layer {
             bindings = <
-                // KC_F1, KC_F2, KC_F3, KC_F4, KC_F5    RGB_VAI, KC_VOLD, KC_VOLU, KC_MUTE, RGB_SAI
-                &kp F1         &kp F2         &kp F3         &kp F4         &kp F5          &bt BT_SEL 0 &kp C_VOL_DN   &kp C_VOL_UP   &kp K_MUTE   &bt BT_SEL 1
-                // KC_F6, KC_F7, KC_F8, KC_F9, KC_F10    RGB_VAD, KC_MPRV, KC_MPLY, KC_MNXT, RGB_SAD
-                &kp F6         &kp F7         &kp F8         &kp F9         &kp F10         &bt BT_SEL 2 &kp C_PREV     &kp C_PP       &kp C_NEXT   &bt BT_SEL 3
-                // KC_F11, KC_F12, KC_NO, TG(4), KC_SLEP    RGB_HUD, RGB_HUI, RGB_TOG, RGB_MOD, RGB_RMOD
-                &kp LCTRL      &kp F11        &kp F12        &none          &none     &kp C_SLEEP &bt BT_SEL 4 &bt BT_CLR     &none          &none        &none      &kp DEL
-                                              &kp LALT       &trans         &kp SPACE       &kp BSPC     &trans         &kp LSHFT
+           &kp F1   &kp F2   &kp F3    &kp F4  &kp F5       &bt BT_SEL 0  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP   &kp K_MUTE  &none
+           &kp F6   &kp F7   &kp F8    &kp F9  &kp F10      &bt BT_SEL 1  &kp C_PREV         &kp C_PLAY_PAUSE  &kp C_NEXT  &none
+&kp LCTRL  &kp F11  &kp F12  &none     &none   &none        &bt BT_SEL 2  &bt BT_SEL 3       &bt BT_SEL 4      &none       &none  &bt BT_CLR
+                             &kp LALT  &mo 1   &kp SPACE    &kp BSPC      &mo 2              &kp LSHFT
             >;
-            label = "Fn/Media";
+
+            label = "Fn/ Media";
         };
     };
 
     conditional_layers {
         compatible = "zmk,conditional-layers";
 
-        layer_fn {
+        Layer_FN {
             if-layers = <1 2>;
             then-layer = <3>;
         };
