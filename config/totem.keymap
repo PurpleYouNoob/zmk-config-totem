@@ -28,37 +28,37 @@
 
         Bt_Disc0 {
             bindings = <&bt BT_DISC 0>;
-            key-positions = <5 20 33 36>;
+            key-positions = <5 20>;
             layers = <3>;
         };
 
         BT_Disc1 {
             bindings = <&bt BT_DISC 1>;
-            key-positions = <20 15 33 36>;
+            key-positions = <20 15>;
             layers = <3>;
         };
 
         BT_Disc2 {
             bindings = <&bt BT_DISC 2>;
-            key-positions = <20 26 33 36>;
+            key-positions = <20 26>;
             layers = <3>;
         };
 
         BT_Disc3 {
             bindings = <&bt BT_DISC 3>;
-            key-positions = <20 27 33 36>;
+            key-positions = <20 27>;
             layers = <3>;
         };
 
         BT_Disc4 {
             bindings = <&bt BT_DISC 4>;
-            key-positions = <20 28 33 36>;
+            key-positions = <20 28>;
             layers = <3>;
         };
 
         accent_aigue {
             bindings = <&kp RA(EQUAL)>;
-            key-positions = <30 36>;
+            key-positions = <30 20>;
             layers = <2>;
         };
     };
