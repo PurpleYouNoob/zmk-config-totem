@@ -61,7 +61,7 @@
         accent_grave_aigu: accent_grave_aigu {
             compatible = "zmk,behavior-mod-morph";
             label = "ACCENT_GRAVE_AIGU";
-            bindings = <&kp RA(LC(NUHS))>, <&kp RA(EQUAL)>;
+            bindings = <&kp RA(LC(NUHS))>, <&kp EQUAL>;
 
             #binding-cells = <0>;
             mods = <(MOD_LCTL)>;
