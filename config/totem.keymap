@@ -57,7 +57,7 @@
         };
 
         accent_aigue {
-            bindings = <&kp RA(EQUAL)>;
+            bindings = <&kp A>;
             key-positions = <30 20>;
             layers = <2>;
         };
