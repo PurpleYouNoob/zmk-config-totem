@@ -6,71 +6,58 @@
     combos {
         compatible = "zmk,combos";
 
-        Esc {
-            bindings = <&kp ESC>;
-            key-positions = <11 10>;
-        };
+        Esc     { bindings = <&kp ESC>;    key-positions = <11 10>; };
+        Tab     { bindings = <&kp TAB>;    key-positions = <13 12>; };
+        Enter   { bindings = <&kp ENTER>;  key-positions = <16 17>; };
+        Windows { bindings = <&kp LEFT_WIN>; key-positions = <18 19>; };
 
-        Tab {
-            bindings = <&kp TAB>;
-            key-positions = <13 12>;
-        };
-
-        Enter {
-            bindings = <&kp ENTER>;
-            key-positions = <16 17>;
-        };
-
-        Windows {
-            bindings = <&kp LEFT_WIN>;
-            key-positions = <18 19>;
-        };
-
-        Bt_Disc0 {
-            bindings = <&bt BT_DISC 0>;
-            key-positions = <5 20>;
-            layers = <3>;
-        };
-
-        BT_Disc1 {
-            bindings = <&bt BT_DISC 1>;
-            key-positions = <20 15>;
-            layers = <3>;
-        };
-
-        BT_Disc2 {
-            bindings = <&bt BT_DISC 2>;
-            key-positions = <20 26>;
-            layers = <3>;
-        };
-
-        BT_Disc3 {
-            bindings = <&bt BT_DISC 3>;
-            key-positions = <20 27>;
-            layers = <3>;
-        };
-
-        BT_Disc4 {
-            bindings = <&bt BT_DISC 4>;
-            key-positions = <20 28>;
-            layers = <3>;
-        };
+        Bt_Disc0 { bindings = <&bt BT_DISC 0>; key-positions = <5 20>;  layers = <3>; };
+        BT_Disc1 { bindings = <&bt BT_DISC 1>; key-positions = <20 15>; layers = <3>; };
+        BT_Disc2 { bindings = <&bt BT_DISC 2>; key-positions = <20 26>; layers = <3>; };
+        BT_Disc3 { bindings = <&bt BT_DISC 3>; key-positions = <20 27>; layers = <3>; };
+        BT_Disc4 { bindings = <&bt BT_DISC 4>; key-positions = <20 28>; layers = <3>; };
     };
 
     behaviors {
+        /* Your original (Windows-style) accent morph */
         accent_grave_aigu: accent_grave_aigu {
             compatible = "zmk,behavior-mod-morph";
             label = "ACCENT_GRAVE_AIGU";
             bindings = <&kp RA(LC(NUHS))>, <&kp RA(SQT)>;
-
             #binding-cells = <0>;
             mods = <(MOD_LCTL)>;
+        };
+
+        /* macOS-friendly accent morph (Option-based dead keys) */
+        accent_grave_aigu_mac: accent_grave_aigu_mac {
+            compatible = "zmk,behavior-mod-morph";
+            label = "ACCENT_MAC";
+            bindings = <&kp LA(GRAVE)>, <&kp LA(E)>;
+            #binding-cells = <0>;
+            mods = <(MOD_LGUI)>; /* hold Cmd to flip grave→acute */
+        };
+
+        /* OS mode switch macros (independent of active BT slot)
+           - Also hop to preferred BT slot: Win→0, Mac→2 (remove the &bt lines if you don't want that) */
+        to_win_mode: to_win_mode {
+            compatible = "zmk,behavior-macro";
+            label = "TO_WIN_MODE";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 0>, <&tog 4>, <&tog 5>; /* enable layer 4, disable 5 */
+        };
+
+        to_mac_mode: to_mac_mode {
+            compatible = "zmk,behavior-macro";
+            label = "TO_MAC_MODE";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 2>, <&tog 5>, <&tog 4>; /* enable layer 5, disable 4 */
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
 
+        /* 0 — Base */
         base_layer {
             bindings = <
            &kp Q  &kp W  &kp E     &kp R  &kp T        &kp Y     &kp U       &kp I      &kp O      &kp P
@@ -78,10 +65,10 @@
 &kp LCTRL  &kp Z  &kp X  &kp C     &kp V  &kp B        &kp N     &kp LS(LT)  &kp M      &kp COMMA  &kp DOT   &kp DEL
                          &kp LALT  &mo 1  &kp SPACE    &kp BSPC  &mo 2       &kp LSHFT
             >;
-
             label = "Base";
         };
 
+        /* 1 — Nav */
         nav_layer {
             bindings = <
            &none            &kp HOME   &kp UP    &kp END    &none        &kp FSLH      &kp LS(EXCL)  &kp LS(AT)     &kp LS(POUND)  &kp LS(QMARK)
@@ -89,10 +76,10 @@
 &kp LCTRL  &none            &kp PG_UP  &kp INS   &kp PG_DN  &none        &kp LS(GT)    &kp LS(AMPS)  &kp LS(STAR)   &kp LS(LPAR)   &kp LS(RBRC)   &kp DEL
                                        &kp LALT  &mo 1      &kp SPACE    &kp BSPC      &mo 2         &kp LSHFT
             >;
-
             label = "Nav";
         };
 
+        /* 2 — Symbols */
         symb_layer {
             bindings = <
            &kp RBKT           &kp LS(PLUS)              &kp N3          &kp N4    &kp LS(RBRC)        &kp LS(M)      &kp N1     &kp RA(LC(N1))    &kp LC(RA(N2))             &kp RA(LC(N3))
@@ -100,28 +87,74 @@
 &kp LCTRL  &kp RA(LC(SLASH))  &kp EQUAL                 &kp LS(QMARK)   &kp FSLH  &kp RA(LC(NUBS))    &kp LC(RA(E))  &kp DOT    &kp LEFT_BRACKET  &kp LS(DQT)                &accent_grave_aigu  &kp DEL
                                                         &kp LALT        &mo 1     &kp SPACE           &kp BSPC       &mo 2      &kp LSHFT
             >;
-
             label = "Symbole";
         };
 
+        /* 3 — Fn/Media
+           The **key left of Sleep** is the OS SWITCH placeholder = &trans here.
+           Actual function is overlaid by the active MODE layer (Win or Mac). */
         fn_layer {
             bindings = <
            &kp F1   &kp F2   &kp F3    &kp F4  &kp F5         &bt BT_SEL 0  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP   &kp C_MUTE  &none
            &kp F6   &kp F7   &kp F8    &kp F9  &kp F10        &bt BT_SEL 1  &kp C_PREV         &kp C_PLAY_PAUSE  &kp C_NEXT  &none
-&kp LCTRL  &kp F11  &kp F12  &none     &none   &kp C_SLEEP    &bt BT_SEL 2  &bt BT_SEL 3       &bt BT_SEL 4      &none       &none  &bt BT_CLR
+&kp LCTRL  &kp F11  &kp F12  &trans    &trans  &kp C_SLEEP    &bt BT_SEL 2  &bt BT_SEL 3       &bt BT_SEL 4      &none       &none  &bt BT_CLR
                              &kp LALT  &mo 1   &kp SPACE      &kp BSPC      &mo 2              &kp LSHFT
             >;
-
             label = "Fn/ Media";
+        };
+
+        /* 4 — WIN_MODE (mutually-exclusive with MAC_MODE)
+           Holds Windows-specific overrides AND overlays the OS switch key with "go Mac". */
+        win_mode {
+            label = "WIN_MODE";
+            bindings = <
+                &trans &trans &trans   &trans &trans         &trans &trans &trans &trans &trans
+                &trans &trans &trans   &trans &trans         &trans &trans &trans &trans &trans
+&trans          &trans &trans &trans   &to_mac_mode &trans    &trans &trans &trans &trans &trans &trans
+                                   &trans &trans &trans       &trans &trans &trans
+            >;
+            /* Put any Windows-only behavior here if you want later (e.g., true PrintScreen/Insert). */
+        };
+
+        /* 5 — MAC_MODE (mutually-exclusive with WIN_MODE)
+           Holds macOS-specific overrides AND overlays the OS switch key with "go Win". */
+        mac_mode {
+            label = "MAC_MODE";
+            bindings = <
+                &trans &trans &trans   &trans &trans         &trans &trans &trans &trans &trans
+                &trans &trans &trans   &trans &trans         &trans &trans &trans &trans &trans
+&trans          &trans &trans &trans   &to_win_mode &trans    &trans &trans &trans &trans &trans &trans
+                                   &trans &trans &trans       &trans &trans &trans
+            >;
+
+            /* Examples (uncomment & place in the right matrix slots when ready):
+             * // Screenshot full screen / area / UI:
+             * // &kp LG(LS(N3))  &kp LG(LS(N4))  &kp LG(LS(N5))
+             * // Home/End → start/end of line:
+             * // &kp LG(LEFT)    &kp LG(RIGHT)
+             * // Insert → Cmd+/:
+             * // &kp LG(SLASH)
+             * // Accent key spot (where you have &accent_grave_aigu on layer 2):
+             * // &accent_grave_aigu_mac
+             */
         };
     };
 
     conditional_layers {
         compatible = "zmk,conditional-layers";
 
+        /* Your existing FN overlay when Nav or Symb is active */
         Layer_FN {
             if-layers = <1 2>;
             then-layer = <3>;
         };
+
+        /* (Optional but recommended) Ensure we start in Windows mode on boot.
+           Some ZMK builds support marking a layer "sticky" at boot via a condition like this.
+           If your build doesn't, tap the OS switch once to enter a mode and it will persist. */
+        // StartWin {
+        //     if-not-layers = <4 5>;
+        //     then-layer = <4>;
+        // }
     };
 };
